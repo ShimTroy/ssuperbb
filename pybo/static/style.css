@@ -1,0 +1,1023 @@
+@font-face {
+    font-family: notosans-black;
+    src: url("font/NotoSansKR-Black.otf");
+}
+
+@font-face {
+    font-family: notosans-bold;
+    src: url("font/NotoSansKR-Bold.otf");
+}
+
+@font-face {
+    font-family: notosans-light;
+    src: url("font/NotoSansKR-Light.otf");
+}
+
+@font-face {
+    font-family: notosans-medium;
+    src: url("font/NotoSansKR-Medium.otf");
+}
+
+@font-face {
+    font-family: notosans-regular;
+    src: url("font/NotoSansKR-Regular.otf");
+}
+
+@font-face {
+    font-family: notosans-thin;
+    src: url("font/NotoSansKR-Thin.otf");
+}
+
+.list-card {
+    position: relative;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+    transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+    cursor: pointer;
+    margin-bottom: 1vw;
+}
+
+.list-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+}
+
+.list-card .card-value {
+    color: #fff;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 0.35s ease-in-out;
+}
+
+.list-card:hover .card-value {
+    opacity: 1;
+}
+
+.list-card img {
+    padding: 0.7vw 0.7vw;
+}
+
+@media (max-width: 990px) {
+    .card {
+        margin: 20px;
+    }
+}
+
+.map_wrap, .map_wrap * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+    font-size: 12px;
+}
+
+.map_wrap {
+    position: relative;
+    width: 100%;
+}
+
+#category {
+    display: block;
+    top: 10px;
+    left: 10px;
+    border-radius: 5px;
+    border: 1px solid #909090;
+    background: #fff;
+    overflow: hidden;
+    z-index: 2;
+}
+
+#category li {
+    float: left;
+    list-style: none;
+    width: 50px;
+    border-right: 1px solid #acacac;
+    padding: 6px 0;
+    text-align: center;
+    cursor: pointer;
+}
+
+#category li.on {
+    background: #eee;
+}
+
+#category li:hover {
+    background: #ffe6e6;
+    border-left: 1px solid #acacac;
+    margin-left: -1px;
+}
+
+#category li:last-child {
+    margin-right: 0;
+    border-right: 0;
+}
+
+#category li span {
+    display: block;
+    margin: 0 auto 3px;
+    width: 27px;
+    height: 28px;
+}
+
+#category li .category_bg {
+    background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png) no-repeat;
+}
+
+#category li .bank {
+    background-position: -10px 0;
+}
+
+#category li .mart {
+    background-position: -10px -36px;
+}
+
+#category li .pharmacy {
+    background-position: -10px -72px;
+}
+
+#category li .oil {
+    background-position: -10px -108px;
+}
+
+#category li .cafe {
+    background-position: -10px -144px;
+}
+
+#category li .store {
+    background-position: -10px -180px;
+}
+
+#category li.on .category_bg {
+    background-position-x: -46px;
+}
+
+.placeinfo_wrap {
+    position: absolute;
+    bottom: 28px;
+    left: -150px;
+    width: 300px;
+}
+
+.placeinfo {
+    position: relative;
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    background: #fff;
+}
+
+.placeinfo:nth-of-type(n) {
+    border: 0;
+    box-shadow: 0px 1px 2px #888;
+}
+
+.placeinfo_wrap .after {
+    content: '';
+    position: relative;
+    margin-left: -12px;
+    left: 50%;
+    width: 22px;
+    height: 12px;
+    background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+}
+
+.placeinfo a, .placeinfo a:hover, .placeinfo a:active {
+    color: #fff;
+    text-decoration: none;
+}
+
+.placeinfo a, .placeinfo span {
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.placeinfo span {
+    margin: 5px 5px 0 5px;
+    cursor: default;
+    font-size: 13px;
+}
+
+.placeinfo .title {
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 6px 6px 0 0;
+    margin: -1px -1px 0 -1px;
+    padding: 10px;
+    color: #fff;
+    background: #ffc107;
+    background: #ffc107 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;
+}
+
+.placeinfo .tel {
+    color: #0f7833;
+}
+
+.placeinfo .jibun {
+    color: #999;
+    font-size: 11px;
+    margin-top: 0;
+}
+
+.banner_img {
+    width: 100%;
+    margin-bottom: 2vw;
+}
+
+.banner_title {
+    font-family: jalnan;
+    font-size: 2.5vw;
+}
+
+.banner_content {
+    font-family: notosans-regular;
+    font-size: 1vw;
+}
+
+.banner_content2 {
+    font-family: notosans-regular;
+    font-size: 1vw;
+    margin-bottom: 3vw;
+}
+
+.nav-link {
+    border-bottom: 3px solid #ffffff;
+}
+
+.navbar-brand {
+    border-bottom: 3px solid #ffffff;
+}
+
+.nav-border:hover {
+    border-bottom: 3px solid #ffc107;
+}
+
+.main_banner {
+    /*width: 100%;*/
+    margin: 4vw 0px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.slick_set {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.PBTitle {
+    padding-bottom: 20px;
+    padding-left: 140px;
+    font-size: 60px;
+}
+
+.ProductContainer {
+    height: 500px;
+    margin-bottom: 30px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+    background-color: var(--main--color);
+}
+
+.inner {
+    position: relative;
+    width: 960px;
+    min-width: 960px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.product_view {
+    height: 420px;
+    background: #fff;
+}
+
+.product_view .product_img {
+    float: left;
+    width: 478px;
+    height: 420px;
+    text-align: center;
+    margin: 0 auto;
+    border-right: 1px solid rgba(0, 0, 0, .2);
+}
+
+.product_content {
+    float: left;
+    width: 400px;
+    margin-left: 40px;
+}
+
+.product_view > .product_content dl dt {
+    height: 150px;
+    padding-top: 50px;
+}
+
+.product_view > .product_content dl dt > .product_name {
+    font-size: 30px;
+    letter-spacing: -1px;
+    line-height: 35px;
+    margin-bottom: 10px;
+}
+
+
+.product_content dl dd {
+    float: left;
+}
+
+.content_dd_01 {
+    height: 180px;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    margin: 0;
+}
+
+.txt {
+    list-style: none;
+    display: block;
+    width: 400px;
+    margin-bottom: 20px;
+    padding-left: 0;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+.content_dd_02 {
+    height: 40px;
+    width: 95%;
+    position: relative;
+    margin-left: 0px;
+}
+
+.content_dd_02 > a {
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.product_price {
+    display: inline-block;
+    position: absolute;
+    right: 0px;
+    margin-top: 9px;
+    text-align: right;
+    font-size: 24px;
+    color: #2f3234;
+}
+
+
+.comment_cont {
+    height: 250px;
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+
+}
+
+.comment_div {
+    position: relative;
+    margin: 0px 8vw 0px 8vw;
+    min-width: 960px;
+    width: 960px;
+    padding: 20px;
+}
+
+.CommentWriter {
+    margin: 12px 0 30px;
+    height: 132px;
+    padding: 18px 10px 10px 18px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    box-sizing: border-box;
+    background: #ffffff;
+}
+
+.CommentWriter .comment_inner1 {
+    position: relative;
+    margin-bottom: 10px;
+    height: 70px;
+}
+
+.CommentWriter .comment_name {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 20px;
+    font-style: normal;
+}
+
+.CommentWriter .comment_text {
+    display: block;
+    width: 100%;
+    min-height: 15px;
+    padding-right: 1px;
+    border: 0;
+    -webkit-appearance: none;
+    resize: none;
+    box-sizing: border-box;
+    background: transparent;
+    color: black;
+    outline: 0;
+}
+
+.comment_inner2 {
+    position: relative;
+    display: block;
+}
+
+.comment_inner2 .register_box {
+    float: right;
+}
+
+.comment_inner2 .register_box .submit_button {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 14px;
+    background: transparent;
+    border: 0;
+    font-weight: bold;
+}
+
+.review_num {
+    width: 960px;
+    margin-left: 145px;
+
+}
+
+.comment_container {
+    margin: 0px 8vw 0px 8vw;
+    max-width: 960px;
+    width: 960px;
+    padding: 15px;
+}
+
+.review_inner {
+    position: relative;
+    width: 920px;
+    min-width: 920px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.comment_profile {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+}
+
+.comment_box {
+    margin-left: 55px;
+}
+
+.comment_nick_setting {
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.comment_box_text {
+    position: relative;
+    font-size: 17px;
+}
+
+.comment_recommend {
+    margin-top: 7px;
+    font-size: 15px;
+    color: #555555;
+}
+
+.modify_box {
+    float: right;
+}
+
+.modify_btn {
+    text-decoration: none;
+    color: #555555;
+    margin-right: 4px;
+}
+
+.modify_btn:hover {
+    text-decoration: none;
+    color: #ffc107;
+    margin-right: 4px;
+}
+
+.delete_btn {
+    text-decoration: none;
+    color: #555555;
+    margin-right: 4px;
+}
+
+.delete_btn:hover {
+    text-decoration: none;
+    color: #ffc107;
+    margin-right: 4px;
+}
+
+.comment_item {
+    position: relative;
+    border-top: 1.8px solid #dee2e6 !important;
+}
+
+
+.comment_body {
+    padding: 12px 20px 12px 0px;
+}
+
+.recommend_style {
+    text-decoration: none;
+    color: black;
+}
+
+.recommend_style:hover {
+    text-decoration: none;
+    color: #ffc107;
+}
+
+.event_area {
+    margin-top: 2vw;
+    margin-bottom: 5vw;
+}
+
+.comment {
+    border-top: dotted 1px #ddd;
+    font-size: 0.7em;
+}
+
+.comment_of_comment_inner {
+    position: relative;
+    width: 855px;
+    min-width: 855px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 65px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.coc_item {
+    position: relative;
+}
+
+.coc_body {
+    padding: 12px 20px 12px 0px;
+}
+
+.coc_box {
+    margin-left: 55px;
+}
+
+
+.question_container {
+    margin: 70px 8vw 0px 8vw;
+    min-width: 960px;
+    width: 960px;
+    padding: 15px;
+}
+
+.question_recommend {
+    padding: 15px 0px;
+    border-bottom: 1.8px solid #dee2e6 !important;
+
+}
+
+.question_info {
+    border-bottom: 1.8px solid #dee2e6 !important;
+
+}
+
+:root {
+    --main--color: #ffc107;
+    --sub--color: #ffca2c;
+    --sub1--color: #292109;
+}
+
+.visual_area1 {
+    display: flex;
+    width: 100%;
+    margin-top: 6vw;
+    margin-bottom: 1vw;
+    font-family: notosans-bold;
+    font-size: 3vw;
+    justify-content: center;
+    /* padding-left: 30px; */
+}
+
+.visual_area_logo > img {
+    width: 370px;
+}
+
+@media (max-width: 1090px) {
+
+
+    .visual_area_logo > img {
+        width: 34vw;
+    }
+
+    .visual_area_logo {
+        margin-right: 1.8vw;
+    }
+}
+
+.post-slider {
+    width: 70%;
+    margin: 0px auto;
+    position: relative;
+}
+
+.event-slider {
+    width: 100%;
+    margin: 0px auto;
+    position: relative;
+}
+
+.post-slider .silder-title {
+    text-align: center;
+    margin: 30px auto;
+}
+
+.post-slider .next {
+    position: absolute;
+    top: 45%;
+    right: -30px;
+    font-size: 2em;
+    color: gray;
+    cursor: pointer;
+    transform: translate(50%, -50%);
+}
+
+.post-slider .prev {
+    position: absolute;
+    top: 45%;
+    left: -30px;
+    font-size: 2em;
+    color: gray;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+}
+
+.event-slider .next_event {
+    position: absolute;
+    top: 50%;
+    right: 235px;
+    width: 2em;
+    height: 2em;
+    font-size: 2em;
+    color: gray;
+    cursor: pointer;
+    z-index: 1;
+    background: white;
+    opacity: 0.9;
+    transform: translate(-50%, -50%);
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    box-shadow: 1px 1px 10px gray;
+}
+
+.event-slider .next_event div {
+    margin-top: 25%;
+}
+
+.event-slider .prev_event {
+    position: absolute;
+    top: 50%;
+    left: 235px;
+    width: 2em;
+    height: 2em;
+    font-size: 2em;
+    color: gray;
+    cursor: pointer;
+    z-index: 1;
+    background: white;
+    opacity: 0.9;
+    transform: translate(50%, -50%);
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    box-shadow: -1px 1px 10px gray;
+}
+
+.event-slider .prev_event div {
+    margin-top: 25%;
+}
+
+.post-slider .post-wrapper {
+    width: 100%;
+    margin: 0px auto;
+    overflow: hidden;
+    padding: 10px 0px 10px 0px;
+}
+
+.post-slider .post-wrapper .post {
+    /*width: 300px;*/
+    /*height: 300px;*/
+    margin: 10px 10px;
+    display: inline-block;
+    /*background: white;*/
+    /*border-radius: 5px;*/
+}
+
+.post-slider .event-wrapper .post {
+    /*width: 300px;*/
+    /*height: 300px;*/
+    /*margin: 10px 10px;*/
+    /*display: inline-block;*/
+    /*background: white;*/
+    /*border-radius: 5px;*/
+}
+
+.event-slider .event-wrapper .post img {
+    width: 100%;
+    padding: 1vw;
+    border-radius: 50px;
+    /*margin: 0px 1vw;*/
+}
+
+.ck-editor__editable {
+    min-height: 300px;
+}
+
+/*-------------------------*/
+
+.map_wrap, .map_wrap * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+    font-size: 12px;
+}
+
+.map_wrap a, .map_wrap a:hover, .map_wrap a:active {
+    color: #000;
+    text-decoration: none;
+}
+
+.map_wrap {
+    position: relative;
+    width: 100%;
+    height: 500px;
+}
+
+#menu_wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+    margin: 10px 0 30px 10px;
+    padding: 5px;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 1;
+    font-size: 12px;
+    border-radius: 10px;
+}
+
+.bg_white {
+    background: #fff;
+}
+
+#menu_wrap hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 2px solid #5F5F5F;
+    margin: 3px 0;
+}
+
+#menu_wrap .option {
+    text-align: center;
+}
+
+#menu_wrap .option p {
+    margin: 10px 0;
+}
+
+#menu_wrap .option button {
+    margin-left: 5px;
+}
+
+#placesList li {
+    list-style: none;
+}
+
+#placesList .item {
+    position: relative;
+    border-bottom: 1px solid #888;
+    overflow: hidden;
+    cursor: pointer;
+    min-height: 65px;
+}
+
+#placesList .item span {
+    display: block;
+    margin-top: 4px;
+}
+
+#placesList .item h5, #placesList .item .info {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#placesList .item .info {
+    padding: 10px 0 10px 55px;
+}
+
+#placesList .info .gray {
+    color: #8a8a8a;
+}
+
+#placesList .info .jibun {
+    padding-left: 26px;
+    background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;
+}
+
+#placesList .info .tel {
+    color: #009900;
+}
+
+#placesList .item .markerbg {
+    float: left;
+    position: absolute;
+    width: 36px;
+    height: 37px;
+    margin: 10px 0 0 10px;
+    background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;
+}
+
+#placesList .item .marker_1 {
+    background-position: 0 -10px;
+}
+
+#placesList .item .marker_2 {
+    background-position: 0 -56px;
+}
+
+#placesList .item .marker_3 {
+    background-position: 0 -102px
+}
+
+#placesList .item .marker_4 {
+    background-position: 0 -148px;
+}
+
+#placesList .item .marker_5 {
+    background-position: 0 -194px;
+}
+
+#placesList .item .marker_6 {
+    background-position: 0 -240px;
+}
+
+#placesList .item .marker_7 {
+    background-position: 0 -286px;
+}
+
+#placesList .item .marker_8 {
+    background-position: 0 -332px;
+}
+
+#placesList .item .marker_9 {
+    background-position: 0 -378px;
+}
+
+#placesList .item .marker_10 {
+    background-position: 0 -423px;
+}
+
+#placesList .item .marker_11 {
+    background-position: 0 -470px;
+}
+
+#placesList .item .marker_12 {
+    background-position: 0 -516px;
+}
+
+#placesList .item .marker_13 {
+    background-position: 0 -562px;
+}
+
+#placesList .item .marker_14 {
+    background-position: 0 -608px;
+}
+
+#placesList .item .marker_15 {
+    background-position: 0 -654px;
+}
+
+#pagination {
+    margin: 10px auto;
+    text-align: center;
+}
+
+#pagination a {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#pagination .on {
+    font-weight: bold;
+    cursor: default;
+    color: #777;
+}
+
+
+.mypage_username {
+    padding: 20px;
+    margin: 20px;
+}
+
+.recommend_product {
+    margin: 20px;
+}
+
+.recommend_question {
+    margin: 20px;
+}
+
+.written_question {
+    margin: 20px;
+}
+
+.list_link {
+    position: relative;
+    padding-bottom: 5px;
+    margin-left: 15px;
+    text-decoration: none;
+    color: black;
+    font-size: 13px;
+}
+
+.mypage_option {
+    padding: 10px 0px;
+    margin: 20px 0px;
+    border-bottom: 1.8px solid #1c1f23 !important;
+}
+
+.mypage_nav {
+    padding: 20px;
+}
+
+.link_mypage {
+    padding: 0px 20px;
+
+}
+
+.recommend_review {
+    padding: 20px;
+}
+
+.question_button {
+    margin-bottom: 20px;
+    height: 35px;
+
+}
+
+.question_button_inner {
+    float: right;
+    text-decoration: none;
+    color: #292109;
+    background-color: #ffc107;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+.search_input {
+    float: right;
+    width: 50%;
+}
+
+.visual_area2 {
+    font-family: notosans-bold;
+    font-size: 2vw;
+    margin-bottom: 0.5vw;
+}
+.visual_area{
+    font-family: notosans-regular;
+    font-size: 1.5vw;
+    margin-bottom: 1vw;
+}
+.qbutton{
+    font-family: notosans-medium;
+}
+.sub{
+    font-family: notosans-medium;
+}

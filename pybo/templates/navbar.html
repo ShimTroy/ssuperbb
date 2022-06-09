@@ -1,0 +1,80 @@
+<!--&lt;!&ndash; 네비게이션바 &ndash;&gt;-->
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">-->
+<!--    <div class="container-fluid">-->
+<!--        <a class="navbar-brand" href="{{ url_for('main.index') }}">Pybo</a>-->
+<!--        <button class="navbar-toggler" type="button"-->
+<!--                data-bs-toggle="collapse"-->
+<!--                data-bs-target="#navbarSupportedContent"-->
+<!--                aria-controls="navbarSupportedContent"-->
+<!--                aria-expanded="false"-->
+<!--                aria-label="Toggle navigation">-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--        </button>-->
+<!--        <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+<!--            {% if g.user %}-->
+<!--            <ul class="navbar-nav">-->
+<!--                <li class="nav-item ">-->
+<!--                    <a class="nav-link" href="{{ url_for('auth.logout') }}">{{ g.user.username }} (로그아웃)</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--            {% else %}-->
+<!--            <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="{{ url_for('auth.signup') }}">계정생성</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="{{ url_for('auth.login') }}">로그인</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        {% endif %}-->
+<!--    </div>-->
+<!--</nav>-->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" aria-label="Ninth navbar example">
+    <div class="container-xl">
+        <a class="navbar-brand" href="{{ url_for('main.index') }}"><img
+                src="{{ url_for('static', filename='/brand/brand_logo_38x25.png') }}"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07XL"
+                aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample07XL">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link nav-border" href="{{ url_for('product.heyroo') }}">HEYROO</a></li>
+                <li class="nav-item"><a class="nav-link nav-border" href="{{ url_for('product.youus') }}">YOUUS</a></li>
+                <li class="nav-item"><a class="nav-link nav-border" href="{{ url_for('product.sselect') }}">7-Select</a></li>
+                <li class="nav-item"><a class="nav-link nav-border" href="{{ url_for('product.minist') }}">Min1st</a></li>
+                <li class="nav-item"><a class="nav-link nav-border" href="{{ url_for('map.map') }}">주변 편의점</a></li>
+                <li class="nav-item"><a class="nav-link nav-border" href="{{ url_for('question._list') }}">제안게시판</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown07XL" data-bs-toggle="dropdown"
+                       aria-expanded="false">고객지원</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                        <li><a class="dropdown-item" href="{{ url_for('support.support') }}">자주묻는질문</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('questions._list') }}">Q&A</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="text-end">
+                {% if g.user %}
+                <a type="text" class="btn nav-item" href="{{ url_for('mypage.main') }}">{{user.username}}</a>
+                <a type="button" class="btn btn-warning" href="{{ url_for('auth.logout') }}">Logout</a>
+                {% else %}
+                <a type="button" class="btn btn-warning" href="{{ url_for('auth.login') }}">Login</a>
+                <a type="button" class="btn btn-warning" href="{{ url_for('auth.signup') }}">Sign-up</a>
+            </div>
+            {% endif %}
+            <!-- <form>
+              <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+            </form> -->
+        </div>
+    </div>
+</nav>
+<script>
+    var url = window.location.pathname;
+    $('nav-item').find('a')(function () {
+       $(this),toggleClass('active', $(this).attr('href')== url);
+    });
+</script>

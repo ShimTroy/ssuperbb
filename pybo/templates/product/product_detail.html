@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-3">
+    <!-- flash 오류 -->
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-danger" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    <!-- 질문 -->
+    <h1 class="PBTitle"></h1>
+    <div class="ProductContainer">
+        <div class="inner">
+            <div class="product_view">
+                <div class="product_img">
+                    <img id="image" src="{{ url_for('static', filename = 'product_img/'+ product.address) }}"
+                         alt="{{ product.subject }}"
+                         width="300px" height="300px" style="margin: 60px 40px;">
+                </div>
+
+                <div class="product_content">
+                    <dl>
+                        <dt>
+                            <span class="product_name">{{ product.subject }}</span>
+                        </dt>
+                        <dd class="content_dd_01">
+                            <ul class="txt">
+                                <li>
+                                    {{ product.explaination }}
+                                </li>
+                            </ul>
+                        </dd>
+                        <dd class="content_dd_02">
+                            <a href="javascript:void(0)" data-uri="{{ url_for('product.vote', product_id=product.id) }}"
+                               class="recommend recommend_style">
+                                <!--<img style="width: 15px; height: 15px; margin-bottom: 4px"-->
+                                <!--src="{{ url_for('static', filename = '/brand/recommend.png') }}" alt="recommend">-->
+                                <i class="fa-solid fa-heart"></i>
+                                <span style="margin-left: 5px">좋아요</span>
+                                <span>{{ product.voter|length }}</span>
+                            </a>
+                            <a href="#" class="recommend_style" style="margin-left: 12px">
+                                <i class="fa-regular fa-comment-dots"></i>
+                                <span style="margin-left: 5px">댓글</span>
+                                <span>{{ product.review_set|length }}</span>
+                            </a>
+                            <span class="product_price">
+                                    <strong>{{ product.content }}</strong>
+                                </span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 답변 목록 -->
+    <div class="comment_container">
+        <h5><strong>후기 {{ product.review_set|length }}개</strong></h5>
+        {% for review in product.review_set %}
+        <ul style="list-style: none; padding-left: 0px; margin-bottom: 0px; width: 960px">
+            <div class="review_inner">
+                <li class="comment_item">
+                    <div class="comment_body">
+                        <img class="comment_profile" src="{{ url_for('static', filename = '/img/profile.png') }}"
+                             alt="profile">
+                        <div class="comment_box">
+                            <div class="comment_nick_setting">
+                                <span style="font-size: 18px; margin-right: 12px;">{{ review.user.username }}</span>
+                                {% if review.modify_date %}
+                                <span style="margin-right: 8px">modified at</span>
+                                <span>{{ review.modify_date|datetime }}</span>
+                                {% else %}
+                                <span>{{ review.create_date|datetime }}</span>
+                                {% endif %}
+                                <div class="modify_box">
+                                    {% if g.user == review.user %}
+                                    <a href="{{ url_for('review.modify', review_id=review.id) }}"
+                                       class="modify_btn">수정</a>
+                                    <a href="#" class="delete delete_btn"
+                                       data-uri="{{ url_for('review.delete', review_id=review.id) }}">삭제</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="comment_box_text">{{ review.content }}</div>
+                            <div class="comment_recommend">
+                                <a href="javascript:void(0)"
+                                   data-uri="{{ url_for('review.vote', review_id=review.id) }}"
+                                   class="recommend recommend_style">
+                                    <!--                                    <img style="width: 15px; height: 15px; margin-bottom: 4px" src="{{ url_for('static', filename = '/brand/recommend.png') }}" alt="recommend">-->
+                                    <i class="fa-solid fa-heart"></i>
+                                    <span style="margin-left: 5px">좋아요</span>
+                                    <span>{{ review.voter|length }}</span>
+                                </a>
+                            </div>
+                        </div>
+                </li>
+            </div>
+        </ul>
+        {% endfor %}
+    </div>
+
+    <!-- 답변 등록 -->
+    <div class="comment_cont">
+        <div class="comment_div">
+            <!-- 오류표시 Start -->
+            {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                {% for field, errors in form.errors.items() %}
+                <strong>{{ form[field].label }}</strong>
+                <ul>
+                    {% for error in errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <!-- 오류표시 End -->
+            <div class="CommentWriter">
+                <form action="{{ url_for('review.create', product_id=product.id) }}" method="post" class="form">
+                    {{ form.csrf_token }}
+                    <div class="comment_inner1">
+                        {% if not g.user %}
+                        <em class="comment_name">로그인 후 이용해주세요.</em>
+                        {% endif %}
+                        <em class="comment_name">{{ g.user.username }}</em>
+                        <textarea {% if not g.user %}disabled{% endif %} name="content" id="content"
+                                  class="comment_text" placeholder="후기를 입력해주세요."></textarea>
+                    </div>
+                    <div class="comment_inner2">
+                        <div class="register_box">
+                            <input type="submit" value="답변등록" class="submit_button">
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row my-5">
+        <div class="visual_area2">다른 상품 보기</div>
+        {% set count = namespace(value=0) %}
+        {% for p in product_list %}
+        {% if p.id >= product.id %}
+        {% set count.value = count.value + 1 %}
+        {% elif p.id < product.id and loop.index <= count.value + 4%}
+        <div class="col-md-3">
+            <a class="card list-card" href="{{ url_for('product.detail', product_id=p.id) }}">
+                <div class="card-value">
+                    <div class="sub">{{ p.subject }}</div>
+                    <div class="cont">{{ p.content }}</div>
+                    <div class="cont"><i class="fa-solid fa-heart"></i> {{ p.voter|length }}</div>
+                </div>
+                <img src="{{ url_for('static', filename = 'product_img/'+ p.address) }}" alt="" class="card-img"/>
+            </a>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endblock %}
+    {% block script %}
+    <script type='text/javascript'>
+        const delete_elements = document.getElementsByClassName("delete");
+        Array.from(delete_elements).forEach(function (element) {
+            element.addEventListener('click', function () {
+                if (confirm("정말로 삭제하시겠습니까?")) {
+                    location.href = this.dataset.uri;
+                }
+                ;
+            });
+        });
+        const recommend_elements = document.getElementsByClassName("recommend");
+        Array.from(recommend_elements).forEach(function (element) {
+            element.addEventListener('click', function () {
+                if (confirm("정말로 좋아요 하시겠습니까?")) {
+                    location.href = this.dataset.uri;
+                }
+                ;
+            });
+        });
+    </script>
+    {% endblock %}

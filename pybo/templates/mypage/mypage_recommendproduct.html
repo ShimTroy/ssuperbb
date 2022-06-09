@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-3">
+{% include 'mypage/mypage_navbar.html' %}
+
+
+    {% if product_list %}
+    {% set count = namespace(value=0) %}
+    {% for product in product_list %}
+    {% for voter in product.voter %}
+    {% if voter == user %}
+
+    {% set count.value = count.value + 1 %}
+
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+
+    <h5 class="link_mypage"><strong>좋아요한 제품 {{ count.value }}개</strong></h5>
+    {%endif %}
+
+    <div class="recommend_product">
+         {% if product_list %}
+        <div class="row">
+            {% for product in product_list %}
+                {% for voter in product.voter %}
+                {% if voter == user %}
+                     <div class="col-md-3">
+                        <a class="card list-card" href="{{ url_for('product.detail', product_id=product.id) }}">
+                            <div class="card-value">
+                                <div class="sub">{{ product.subject }}</div>
+                                <div class="cont">{{ product.content }}</div>
+                                <div class="cont"><i class="fa-solid fa-heart"></i> {{ product.voter|length }}</div>
+                            </div>
+                            <img src="{{ url_for('static', filename = 'product_img/'+ product.address) }}" alt=""
+                                 class="card-img"/>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

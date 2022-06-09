@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-3">
+{% include 'mypage/mypage_navbar.html' %}
+
+
+    {% if answer_list %}
+    {% set count = namespace(value=0) %}
+        {% for answer in answer_list %}
+        {% if user.id == answer.user_id %}
+            {% set count.value = count.value + 1 %}
+        {% endif %}
+        {% endfor %}
+    <h5 class="link_mypage"><strong>작성 후기 {{ count.value }}개</strong></h5>
+    {% endif %}
+
+    <div class="recommend_product" style="font-size: 13px">
+          <table class="table">
+        <thead>
+        <tr class="text-center list_category">
+            <th>번호</th>
+            <th>제품번호</th>
+            <th style="width:50%">내용</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if answer_list %}
+        {% for answer in answer_list %}
+        {% if user.id == answer.user_id %}
+        <tr>
+            <td class="text-center">{{ answer.question_id }}</td>
+            <td>
+                {% if question_list %}
+                {% for question in question_list %}
+                {% if answer.question_id == question.id %}
+                    {{ question.subject }}
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td class="text-left">
+                <a href="{{ url_for('question.detail', question_id=answer.question_id) }}" style="text-decoration: none; color: black">{{ answer.subject }}</a>
+            </td>
+            <td class="text-center">{{ answer.create_date|datetime}}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">내용이 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

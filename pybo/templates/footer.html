@@ -1,0 +1,37 @@
+<div class="border-top">
+    <div class="container">
+        <footer class="row row-cols-4 py-3 my-3 ">
+            <div class="col">
+                <a href="#"><img src="{{ url_for('static', filename='/brand/brand_logo_38x25.png') }}"></a>
+                <p class="text-muted">서울특별시 동작구 상도동 사당로 50 5층 507호 TEL:1588-1588</p>
+                <p class="text-muted">COPYRIGHT &copy; SSUPerB <br>ALL RIGHT RESERVED.</p>
+            </div>
+
+            <div class="col"></div>
+            <div class="col">
+                <h5>Brand</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2"><a href="{{ url_for('product.heyroo') }}" class="nav-link p-0 text-muted">HEYROO</a>
+                    </li>
+                    <li class="nav-item mb-2"><a href="{{ url_for('product.youus') }}" class="nav-link p-0 text-muted">YOUUS</a>
+                    </li>
+                    <li class="nav-item mb-2"><a href="{{ url_for('product.sselect') }}"
+                                                 class="nav-link p-0 text-muted">7-Select</a></li>
+                    <li class="nav-item mb-2"><a href="{{ url_for('product.minist') }}" class="nav-link p-0 text-muted">Min1st</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col">
+                <h5>Menu</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2"><a href="{{ url_for('question._list') }}" class="nav-link p-0 text-muted">제안게시판</a></li>
+                    <li class="nav-item mb-2"><a href="{{ url_for('map.map') }}" class="nav-link p-0 text-muted">주변
+                        편의점</a></li>
+                    <li class="nav-item mb-2"><a href="{{ url_for('support.support') }}" class="nav-link p-0 text-muted">자주묻는질문</a></li>
+                    <li class="nav-item mb-2"><a href="{{ url_for('questions._list') }}" class="nav-link p-0 text-muted">Q&A</a></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+</div>

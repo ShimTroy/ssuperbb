@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    {% include "product/product_banner.html" %}
+    <div class="row">
+        {% if product_list %}
+        {% for product in product_list.items %}
+        {% if product.category == category %}
+        <div class="col-md-3">
+            <a class="card list-card" href="{{ url_for('product.detail', product_id=product.id) }}">
+                <div class="card-value">
+                    <div class="sub">{{ product.subject }}</div>
+                    <div class="cont">{{ product.content }}</div>
+                    <div class="cont"><i class="fa-solid fa-heart"></i> {{ product.voter|length }}</div>
+                </div>
+                <img src="{{ url_for('static', filename = 'product_img/'+ product.address) }}" alt=""
+                     class="card-img"/>
+            </a>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- 페이징처리 시작 -->
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if product_list.has_prev %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ product_list.prev_num }}">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)">이전</a>
+        </li>
+        {% endif %}
+        {% for page_num in product_list.iter_pages() %}
+        {% if page_num %}
+        {% if page_num != product_list.page %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+        </li>
+        {% else %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="javascript:void(0)">{{ page_num }}</a>
+        </li>
+        {% endif %}
+        {% else %}
+        <li class="disabled">
+            <a class="page-link" href="javascript:void(0)">...</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if product_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ product_list.next_num }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- 페이징처리 끝 -->
+</div>
+{% endblock %}

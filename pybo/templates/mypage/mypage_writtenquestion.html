@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-3">
+{% include 'mypage/mypage_navbar.html' %}
+
+
+    {% if question_list %}
+    {% set count = namespace(value=0) %}
+        {% for question in question_list %}
+        {% if user.id == question.user_id %}
+            {% set count.value = count.value + 1 %}
+        {% endif %}
+        {% endfor %}
+        <h5 class="link_mypage"><strong>작성글 {{ count.value }}개</strong></h5>
+    {% endif %}
+
+
+     <div class="written_question" style="font-size: 13px">
+          <table class="table">
+        <thead>
+        <tr class="text-center list_category">
+            <th>번호</th>
+            <th>편의점</th>
+            <th style="width:50%">제목</th>
+            <th>추천</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if question_list %}
+        {% for question in question_list %}
+        {% if user.id == question.user_id %}
+        <tr>
+            <td class="text-center">{{ question.id }}</td>
+            <td class="text-center">{{ question.category }}</td>
+            <td class="text-left">
+                <a href="{{ url_for('question.detail', question_id=question.id) }}" style="text-decoration: none; color: black">{{ question.subject }}</a>
+                {% if question.answer_set|length > 0 %}
+                <span class="text-danger small mx-2">{{ question.answer_set|length }}</span>
+                {% endif %}
+            </td>
+            <td class="text-center">{{ question.voter|length }}</td>
+            <td class="text-center">{{ question.create_date|datetime}}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">내용이 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    </div>
+
+
+</div>
+{% endblock %}

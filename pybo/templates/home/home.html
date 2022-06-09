@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="main_banner">
+        <img class="" src="{{ url_for('static', filename='/brand/pb_banner_small1.jpg') }}">
+        <img class="" src="{{ url_for('static', filename='/brand/pb_banner_small2.jpg') }}">
+    </div>
+</div>
+
+<div class="page-wrapper my-5" style="position:relative;">
+    <!--page slider -->
+<!--    <div class="visual_area1">행사</div>-->
+    <div class="event-slider">
+        <div class="prev_event"><div class="fas fa-chevron-left "></div></div>
+        <div class="next_event"><div class="fas fa-chevron-right "></div></div>
+        <div class="event-wrapper">
+            <div class="post"><img src="{{ url_for('static', filename='/event/event_1.jpg') }}"></div>
+            <div class="post"><img src="{{ url_for('static', filename='/event/event_2.jpg') }}"></div>
+            <div class="post"><img src="{{ url_for('static', filename='/event/event_3.jpg') }}"></div>
+            <div class="post"><img src="{{ url_for('static', filename='/event/event_4.jpg') }}"></div>
+        </div>
+    </div>
+</div>
+
+<div class="page-wrapper" style="position:relative;">
+    <!--page slider -->
+    <div class="visual_area1">신상품</div>
+    <div class="post-slider">
+        <i class="fas fa-chevron-left prev"></i>
+        <i class="fas fa-chevron-right next"></i>
+        <div class="post-wrapper">
+            {% for product in product_list %}
+            {% if product.id > product_list.count()-20 %}
+            <div class="post">
+                <div class="">
+                    <a class="card list-card" href="{{ url_for('product.detail', product_id=product.id) }}">
+                        <div class="card-value">
+                            <div class="sub">{{ product.subject }}</div>
+                            <div class="cont">{{ product.content }}</div>
+                            <div class="cont"><i class="fa-solid fa-heart"></i> {{ product.voter|length }}</div>
+                        </div>
+                        <img src="{{ url_for('static', filename = 'product_img/'+ product.address) }}" alt=""
+                             class="card-img"/>
+                    </a>
+                </div>
+            </div>
+            {% endif%}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!--post slider-->
+</div>
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script>
+    $('.post-wrapper').slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        nextArrow: $('.next'),
+        prevArrow: $('.prev'),
+    });
+</script>
+<script>
+    $('.event-wrapper').slick({
+        arrows: true,
+        centerMode: true,
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        autoplay: true,
+        adaptiveHeight: true,
+        nextArrow: $('.next_event'),
+        prevArrow: $('.prev_event'),
+        variableWidth: true
+    });
+</script>
+
+<!--<div class="container my-3">-->
+<!--    <div class="visual_area1">브랜드</div>-->
+<!--    <div class="row row-cols-4">-->
+<!--        <div class="col-md-3">-->
+<!--            <a class="card list-card" href="#">-->
+<!--                <img src="{{ url_for('static', filename='/brand/heyroo.jpg') }}">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="col-md-3">-->
+<!--            <a class="card list-card" href="#">-->
+<!--                <img src="{{ url_for('static', filename='/brand/youus.jpg') }}">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="col-md-3">-->
+<!--            <a class="card list-card" href="#">-->
+<!--                <img src="{{ url_for('static', filename='/brand/7select.jpg') }}">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="col-md-3">-->
+<!--            <a class="card list-card" href="#">-->
+<!--                <img src="{{ url_for('static', filename='/brand/min1st.jpg') }}">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+{% endblock %}

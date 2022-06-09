@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-3">
+    <div class="row my-3">
+        <div class="col-4">
+
+        </div>
+        <div class="col-8">
+            <div class="search_input">
+                <div class="input-group">
+                    <input type="text" id="search_kw" class="form-control" value="{{ kw or '' }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+        <tr class="text-center list_category">
+            <th>번호</th>
+            <th>유형</th>
+            <th style="width:50%">문의 내역</th>
+            <th>문의자</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if questions_list %}
+        {% for questions in questions_list.items %}
+        <tr class="text-center">
+            <td>{{ questions_list.total - ((questions_list.page-1) * questions_list.per_page) - loop.index0 }}</td>
+            <td>{{ questions.category }}</td>
+            <td>
+                <a href="{{ url_for('questions.detail', questions_id=questions.id) }}"
+                   style="text-decoration: none; color: black">{{ questions.subject }}</a>
+                {% if questions.answers_set|length > 0 %}
+                <span class="text-danger small mx-2">{{ questions.answers_set|length }}</span>
+                {% endif %}
+            </td>
+            <td>{{ questions.user.username }}</td>
+            <td>{{ questions.create_date|datetime }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="4">질문이 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    <div class="col-2 my-3">
+        <a href="{{ url_for('questions.create') }}" class="btn btn-warning"><b>1:1 문의 등록하기</b></a>
+    </div>
+    <!-- 페이징처리 시작 -->
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if questions_list.has_prev %}
+        <li class="page-item">
+            <a class="page-link" data-page="{{ questions_list.prev_num }}" href="javascript:void(0)">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        {% for page_num in questions_list.iter_pages() %}
+        {% if page_num %}
+        {% if page_num != questions_list.page %}
+        <li class="page-item">
+            <a class="page-link" data-page="{{ page_num }}" href="javascript:void(0)">{{ page_num }}</a>
+        </li>
+        {% else %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="#">{{ page_num }}</a>
+        </li>
+        {% endif %}
+        {% else %}
+        <li class="disabled">
+            <a class="page-link" href="#">...</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if questions_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" data-page="{{ questions_list.next_num }}" href="javascript:void(0)">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- 페이징처리 끝
+    <a href="{{ url_for('questions.create') }}" class="btn btn-warning"><b>1:1 문의하기</b></a>-->
+</div>
+<form id="searchForm" method="get" action="{{ url_for('questions._list') }}">
+    <input type="hidden" id="kw" name="kw" value="{{ kw or '' }}">
+    <input type="hidden" id="page" name="page" value="{{ page }}">
+</form>
+{% endblock %}
+{% block script %}
+<script type='text/javascript'>
+    const page_elements = document.getElementsByClassName("page-link");
+    Array.from(page_elements).forEach(function (element) {
+        element.addEventListener('click', function () {
+            document.getElementById('page').value = this.dataset.page;
+            document.getElementById('searchForm').submit();
+        });
+    });
+    const btn_search = document.getElementById("btn_search");
+    btn_search.addEventListener('click', function () {
+        document.getElementById('kw').value = document.getElementById('search_kw').value;
+        document.getElementById('page').value = 1;  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
+        document.getElementById('searchForm').submit();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-3">
+{% include 'mypage/mypage_navbar.html' %}
+
+    {% if review_list %}
+        {% set count = namespace(value=0) %}
+        {% for review in review_list %}
+        {% for voter in review.voter %}
+        {% if voter == user %}
+            {% set count.value = count.value + 1 %}
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+         <h5 class="link_mypage"><strong>좋아요한 후기 {{ count.value }}개</strong></h5>
+    {% endif %}
+
+
+     <div class="recommend_review" style="font-size: 13px">
+          <table class="table">
+        <thead>
+        <tr class="text-center list_category">
+            <th>번호</th>
+            <th>제품명</th>
+            <th style="width:50%">내용</th>
+            <th>추천</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if review_list %}
+        {% for review in review_list %}
+        {% for voter in review.voter %}
+        {% if voter == user %}
+        <tr >
+            <div>
+                <a href="{{ url_for('product.detail', product_id=review.product_id) }}" style="text-decoration: none; color: black">
+            </div>
+            <td class="text-center">{{ review.id }}</td>
+            <td class="text-center">
+                 {% if product_list %}
+                {% for product in product_list %}
+                {% if review.product_id == product.id %}
+                    <a href="{{ url_for('product.detail', product_id=product.id) }}" style="text-decoration: none; color: black">{{ product.subject }}</a>
+                {% endif %}
+                {% endfor %}
+
+                {% endif %}
+            </td>
+            <td class="text-center">{{ review.content }}</td>
+            <td class="text-center">{{ review.voter|length }}</td>
+            <td class="text-center">{{ review.create_date|datetime}}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">내용이 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    </div>
+
+</div>
+{% endblock %}

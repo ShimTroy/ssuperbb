@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container"><br>
+    <h3 class="my-3 border-bottom pb-2"><b>1:1 문의 보내기</b></h3>
+    <form method="post" class="my-3">
+        {{ form.csrf_token }}
+        {% include "form_errors.html" %}
+        <div class="mb-3"><h5><b>
+            <br><label for="subject">문의 제목</label>
+            <input type="text" class="form-control" name="subject" id="subject"
+                   value="{{ form.subject.data or '' }}"><br></b></h5>
+        </div>
+        <div class="mb-3"><h5><b>
+            <label for="category">문의 유형</label>
+            <select class="form-control" name="category" id="category"
+                    value="{{ form.category.data or '' }}">
+                <option>PB상품 페이지 이슈</option>
+                <option>게시판 이슈</option>
+                <option>로그인 및 계정 이슈</option>
+                <option>기타</option>
+            </select><br></b></h5>
+        </div>
+        <div class="mb-3"><h5><b>
+            <label for="content">문의 상세 내용</label>
+            <textarea class="form-control" name="content"
+                      id="content" rows="10">{{ form.content.data or '' }}</textarea><br></b></h5>
+        </div>
+        <button type="submit" class="btn btn-warning">1:1 문의 전송</button>
+    </form>
+</div>
+{% endblock %}

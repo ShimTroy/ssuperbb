@@ -1,0 +1,59 @@
+<div class="mypage_nav">
+
+    <div class="my_info">
+        <img style="width: 75px; height: 75px; position: absolute;" src="{{ url_for('static', filename = '/img/profile.png') }}" alt="profile">
+        <div style="margin-left: 90px;">
+            <div style="margin-top: 15px; margin-bottom: 5px;">
+                <span style="font-size: 18px; margin-right: 12px;"><strong>{{ user.username }}</strong></span>
+            </div>
+            <div style="position:relative; margin: 10px 0px">
+                {% if question_list %}
+                {% set count = namespace(value=0) %}
+                    {% for question in question_list %}
+                    {% if user.id == question.user_id %}
+                        {% set count.value = count.value + 1 %}
+                    {% endif %}
+                    {% endfor %}
+                    <span style="">작성글 <strong> {{ count.value }}</strong></span>
+                {% endif %}
+
+                    {% if review_list %}
+                    {% set count = namespace(value=0) %}
+                    {% for review in review_list %}
+                    {% if user.id == review.user_id %}
+                         {% set count.value = count.value + 1 %}
+                    {% endif %}
+                    {% endfor %}
+                        <span style="margin-left: 20px">작성 후기 <strong> {{ count.value }}</strong></span>
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+
+      <div class="mypage_option">
+        <div class="">
+            <a class="list_link" href="{{ url_for('mypage.writtenquestion') }}">
+                작성글
+            </a>
+            <a class="list_link" href="{{ url_for('mypage.writtenreview') }}">
+                작성 후기
+            </a>
+            <a class="list_link" href="{{ url_for('mypage.writtenanswer') }}">
+                작성 댓글
+            </a>
+             <a class="list_link" href="{{ url_for('mypage.recommendquestion') }}">
+                좋아요한 글
+            </a>
+            <a class="list_link" href="{{ url_for('mypage.recommendproduct') }}">
+                좋아요한 제품
+            </a>
+            <a class="list_link" href="{{ url_for('mypage.recommendreview') }}">
+                좋아요한 후기
+            </a>
+        </div>
+      </div>
+
+
+</div>
